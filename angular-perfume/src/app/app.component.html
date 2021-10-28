@@ -1,0 +1,68 @@
+<div class="body">
+  <div *ngIf="!bestMatch">
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input type="search"
+              placeholder="Search for fragrance"
+              aria-label="Fragrance"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      
+      <button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button *ngIf="isValidSearch" matSuffix mat-icon-button aria-label="Clear" (click)="submitSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+
+    <div class="display_block">
+      <div class="fragrance_info">
+        <h1>{{currentFragrance.name}}</h1>
+        <p>{{currentFragrance.body}}</p>
+      </div>
+      <div class="ranking_block">
+        <button mat-raised-button (click)="rankFragrance(0)">Hated It</button>
+        <button mat-raised-button (click)="rankFragrance(1)">Not Interested</button>
+        <button mat-raised-button (click)="rankFragrance(2)">Meh</button>
+        <button mat-raised-button (click)="rankFragrance(3)">Interested</button>
+        <button mat-raised-button (click)="rankFragrance(4)">Loved It</button>
+        <button mat-raised-button (click)="addToFavorites(currentFragrance)">Add To Favorites</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="bestMatch">
+    <h1>
+      Your Best Matches
+    </h1>
+    <div class="best_matches">
+      <div *ngFor="let match of getBestMatches()">
+        <div class="match_title">
+          <p (click)="printMatchInfo(match)">{{getMatchValue(match)}}% Match</p>
+          <h3>{{match.name}}</h3>
+        </div>
+        <p>{{match.body}}</p>
+        <div class="match_fit">
+          <button mat-raised-button [disabled]="match.ranked" (click)="goodFit(match)">Good Fit</button>
+          <button mat-raised-button [disabled]="match.ranked" (click)="badFit(match)">Bad Fit</button>
+          <button mat-raised-button (click)="addToFavorites(match)">Add To Favorites</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="ranking_block">
+    <button mat-button *ngIf="bestMatch" (click)="toggleMatch(false)">Keep Ranking</button>
+    <button mat-button *ngIf="bestMatch" (click)="reloadMatchScores()">Reload My Matches</button>
+    <button mat-button *ngIf="bestMatch" (click)="printUserData()">Print User Data</button>
+    <button mat-button *ngIf="!bestMatch" [disabled]="!canSeeMatches()" (click)="toggleMatch(true)">Display Best Matches</button>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+.body{
+    width: 90%;
+    margin: 5%;
+}
+
+.ranking_block{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 30pt;
+}
+
+h1{
+    text-align: center;
+}
+
+p{
+    text-align: center;
+    padding: 5vh 0;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.match_title{
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    height: 20pt;
+    padding-top: 10pt;
+}
+
+.match_fit{
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 30pt;
+}
+
+.fragrance_info{
+    height: 40vh;
+}
