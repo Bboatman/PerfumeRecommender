@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input'
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon'
+
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

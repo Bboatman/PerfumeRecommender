@@ -26,8 +26,8 @@ export class AppComponent {
   constructor(){
     let fragrances = []
     this.user = new User();
-
-    for (let dataPoint of data.default){
+    let d: any = data;
+    for (let dataPoint of d.default){
       let fragrance: Fragrance = new Fragrance(dataPoint);
       fragrances.push(fragrance);
       let wordSet: Set<string> = fragrance.getWordSet();
@@ -42,7 +42,7 @@ export class AppComponent {
         }
       }
     }
-
+    console.log(fragrances)
     this.fragrances = fragrances;
     const shuffled = [...this.fragrances].sort(() => 0.5 - Math.random());
     this.fragrances.sort(function(a, b){
