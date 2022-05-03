@@ -135,11 +135,13 @@ export class AppComponent {
   goodFit(fragrance: Fragrance){
     this.user.rankFragrance(2, fragrance);
     fragrance.ranked = true;
+    fragrance.liked = true;
   }
 
   badFit(fragrance: Fragrance){
     this.user.rankFragrance(-2, fragrance);
     fragrance.ranked = true;
+    fragrance.disliked = true;
   }
 
   getBestMatches(){
@@ -148,7 +150,7 @@ export class AppComponent {
       if(a.score < b.score) { return 1; }
       return 0;
     });
-    let comps = [...this.fragrances].filter(elem => elem.score != NaN);
+    let comps = [...this.fragrances].filter(elem => elem.score != NaN && !elem.disliked && !elem.liked);
     return comps.slice(0, 10);
   }
 
@@ -157,6 +159,7 @@ export class AppComponent {
   }
 
   addToFavorites(match: Fragrance){
+    match.liked = true;
     this.user.addFragranceToFavorites(match);
   }
 
@@ -176,14 +179,26 @@ export class AppComponent {
     console.log(userArr)
     console.log(results)
     console.log(match)
+    console.log(this.fragrances.filter(elem => elem.liked))
   }
 
   rankFragrance(rank: number): void{
-    rank = rank - 2;
-    this.user.rankFragrance(rank, this.currentFragrance);
+    let modifiedRank = rank - 2
+    if (rank == 0){
+      this.currentFragrance.disliked = true;
+      modifiedRank -= 30;
+    } else if (rank == 4){
+      this.currentFragrance.liked = true;
+      modifiedRank += 10
+    } else if (rank == 3){
+      modifiedRank += 4
+    } else if (rank == 1){
+      modifiedRank -= 10
+    }
+    this.user.rankFragrance(modifiedRank, this.currentFragrance);
     console.log(this.currentFragrance, this.user.preferences)
     this.currentFragrance.ranked = true;
-    this.currentFragrance.rank = rank;
+    this.currentFragrance.rank = modifiedRank;
     this.getNextFragrance();
   }
 

@@ -10,6 +10,8 @@ export class Fragrance {
     ranked: boolean = false;
     longVec: number[] = [];
     shortVec: number[] = [];
+    liked: boolean = false;
+    disliked: boolean = false;
 
     constructor(obj?: any){
         if (obj){
